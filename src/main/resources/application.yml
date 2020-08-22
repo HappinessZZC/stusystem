@@ -1,0 +1,14 @@
+# 开发环境配置
+server:
+  port: 8180
+# Spring配置
+spring:
+  profiles:
+    active: druid
+
+# Swagger配置
+swagger:
+  # 是否开启swagger
+  enabled: true
+  # 请求前缀
+  pathMapping: /
