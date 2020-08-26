@@ -1,14 +1,22 @@
 package com.lemonyangzw.stusystem.framework.config;
 
 
+import com.lemonyangzw.stusystem.framework.security.filter.JwtAuthenticationTokenFilter;
 import com.lemonyangzw.stusystem.framework.security.handle.AuthenticationEntryPointImpl;
+import com.lemonyangzw.stusystem.framework.security.handle.LogoutSuccessHandlerImpl;
+import com.lemonyangzw.stusystem.framework.security.handle.SecurityAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.annotation.Resource;
 
 /**
  * @author Yang
@@ -16,6 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  *
  * @date 2020/8/6 16:07
  */
+@Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -25,6 +34,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationEntryPointImpl unauthorizedHandler;
 
+    /**
+     * 退出处理类
+     */
+    @Autowired
+    private LogoutSuccessHandlerImpl logoutSuccessHandler;
+
+    /**
+     * token认证过滤器
+     */
+    @Autowired
+    private JwtAuthenticationTokenFilter authenticationTokenFilter;
+
+    /**
+     * 注入自定义的 AuthenticationProvider
+     */
+    @Autowired
+    private SecurityAuthentication provider;
     /**
      * anyRequest          |   匹配所有请求路径
      * access              |   SpringEl表达式结果为true时可以访问
@@ -70,11 +96,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/druid/**").anonymous()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated()
+//                .anyRequest().permitAll()
                 .and()
                 .headers().frameOptions().disable();
-//        httpSecurity.logout().logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler);
+        http.logout().logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler);
         // 添加JWT filter
-//        http.addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
 

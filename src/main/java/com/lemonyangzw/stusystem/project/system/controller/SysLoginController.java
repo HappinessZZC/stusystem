@@ -7,21 +7,28 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Yang
  * @date 2020/7/13 16:02
  */
 @Api("系统登录")
+@CrossOrigin(origins = "http://localhost:9528", maxAge = 3600)
 @RestController
 public class SysLoginController {
     @Autowired
     public SysLoginService sysLoginService;
 
+    /**
+     *
+     * @param map key:username,password,token
+     * @return
+     */
     @ApiOperation("登录验证")
     @PostMapping("/login")
-    @CrossOrigin("http://localhost:9528")
     public AjaxResult login(@RequestBody Map<String, String> map) {
         AjaxResult ajax = AjaxResult.success();
         String token = sysLoginService.login(map);
@@ -30,5 +37,18 @@ public class SysLoginController {
         return ajax;
     }
 
+    @ApiOperation("获取用户信息")
+    @GetMapping("/getInfo")
+    public AjaxResult getInfo(){
+        AjaxResult ajax = AjaxResult.success();
+        // 角色集合
+        Set<String> roles = new HashSet<String>();
+        roles.add("admin");
+        ajax.put("user", "{\"username\": \"123\"}");
+        ajax.put("roles",roles);
+        ajax.put("permissions", roles);
+        System.out.println("123");
+        return ajax;
+    }
 
 }
