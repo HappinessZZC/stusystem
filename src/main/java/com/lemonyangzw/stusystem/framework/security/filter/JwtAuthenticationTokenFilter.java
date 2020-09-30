@@ -1,5 +1,6 @@
 package com.lemonyangzw.stusystem.framework.security.filter;
 
+import com.lemonyangzw.stusystem.common.utils.StringUtils;
 import com.lemonyangzw.stusystem.common.utils.TokenUtils;
 import com.lemonyangzw.stusystem.framework.security.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +29,13 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
-//        tokenUtils.getLoginUser();
-        LoginUser loginUser = new LoginUser();
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
-        //WebAuthenticationDetails 中定义的属性保存了用户登录地址和 sessionId。
-        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        LoginUser loginUser = tokenUtils.getLoginUser(request);
+        if (StringUtils.isNotNull(loginUser) && StringUtils.isNull(SecurityContextHolder.getContext().getAuthentication())) {
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
+            //WebAuthenticationDetails 中定义的属性保存了用户登录地址和 sessionId。
+            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        }
         chain.doFilter(request, response);
     }
 }

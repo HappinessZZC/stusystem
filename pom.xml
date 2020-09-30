@@ -130,7 +130,6 @@
             <artifactId>swagger-models</artifactId>
             <version>1.5.21</version>
         </dependency>
-
         <!-- swagger2-UI-->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -142,6 +141,11 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus</artifactId>
             <version>3.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>4.1.2</version>
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>com.alibaba</groupId>-->

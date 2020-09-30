@@ -1,12 +1,11 @@
-package com.lemonyangzw.stusystem.project.system.service;
+package com.lemonyangzw.stusystem.framework.security.service;
 
+import com.lemonyangzw.stusystem.common.exception.UserPasswordNotMatchException;
 import com.lemonyangzw.stusystem.common.utils.TokenUtils;
 import com.lemonyangzw.stusystem.framework.security.LoginUser;
-import com.lemonyangzw.stusystem.framework.security.handle.SecurityAuthentication;
-import com.lemonyangzw.stusystem.project.system.domain.SysUser;
+import com.lemonyangzw.stusystem.framework.security.provider.SecurityAuthenticationProvider;
 import com.lemonyangzw.stusystem.project.system.mapper.SysUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -23,15 +22,18 @@ public class SysLoginService {
     @Autowired
     private TokenUtils tokenUtils;
     @Autowired
-    private SecurityAuthentication authenticationManager;
-    @Autowired
     private SysUserMapper sysUserMapper;
+    @Resource
+    private SecurityAuthenticationProvider authenticationManager;
 
     public String login(Map<String, String> map) {
-        //认证
-        sysUserMapper.selectUserById(1l);
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(map.get("username"), map.get("password")));
+        Authentication authentication = null;
+        try {
+            authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(map.get("username"), map.get("password")));
+        } catch (Exception e) {
+            throw new UserPasswordNotMatchException();
+        }
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         return tokenUtils.createToken(loginUser);
     }

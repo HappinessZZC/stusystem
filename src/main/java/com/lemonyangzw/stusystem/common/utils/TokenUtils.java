@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +30,10 @@ public class TokenUtils {
     // 令牌有效期（默认30分钟）
     @Value("${token.expireTime}")
     private int tokenExpireTime;
+
+    // 令牌有效期（默认30分钟）
+    @Value("${token.key}")
+    private String key;
 
     /**
      * @param request
@@ -56,6 +61,7 @@ public class TokenUtils {
             String uuid = (String) claims.get(Constants.LOGIN_USER_KEY);
 //            String userKey = getTokenKey(uuid);
 //            LoginUser user = redisCache.getCacheObject(userKey);
+
             return new LoginUser();
         }
         return null;
@@ -69,7 +75,7 @@ public class TokenUtils {
      */
     private Claims parseToken(String token) {
         return Jwts.parserBuilder()
-//                .setSigningKey(tokenSecret)
+                .setSigningKey(Base64.encode(key).getBytes())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -94,7 +100,9 @@ public class TokenUtils {
     }
 
     private String createToken(Map<String, Object> claims) {
-        SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+//        SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+        // 生成密钥
+        SecretKey secretKey = new SecretKeySpec(Base64.encode(key).getBytes(), SignatureAlgorithm.HS512.getJcaName());
         String token = Jwts.builder()
                 .setClaims(claims)
                 .signWith(secretKey)

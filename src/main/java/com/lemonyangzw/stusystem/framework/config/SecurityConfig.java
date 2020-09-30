@@ -4,12 +4,13 @@ package com.lemonyangzw.stusystem.framework.config;
 import com.lemonyangzw.stusystem.framework.security.filter.JwtAuthenticationTokenFilter;
 import com.lemonyangzw.stusystem.framework.security.handle.AuthenticationEntryPointImpl;
 import com.lemonyangzw.stusystem.framework.security.handle.LogoutSuccessHandlerImpl;
-import com.lemonyangzw.stusystem.framework.security.handle.SecurityAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -24,7 +25,6 @@ import javax.annotation.Resource;
  *
  * @date 2020/8/6 16:07
  */
-@Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -50,7 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 注入自定义的 AuthenticationProvider
      */
     @Autowired
-    private SecurityAuthentication provider;
+    private AuthenticationProvider provider;
+
     /**
      * anyRequest          |   匹配所有请求路径
      * access              |   SpringEl表达式结果为true时可以访问
@@ -67,7 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * authenticated       |   用户登录后可访问
      */
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception  {
         http
                 // CRSF禁用，因为不使用session
                 .csrf().disable()
@@ -105,4 +106,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-}
+    /**
+     * 动态认证
+     *
+     * @param auth
+     * @throws Exception
+     */
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(provider);
+    }}

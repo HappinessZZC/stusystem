@@ -1,4 +1,4 @@
-package com.lemonyangzw.stusystem.framework.security.handle;
+package com.lemonyangzw.stusystem.framework.security.provider;
 
 import com.lemonyangzw.stusystem.framework.security.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,37 +6,30 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-
 /**
  * @author Yang
- * @date 2020/8/26 9:42
+ * @date 2020/9/8 15:19
  */
 @Component
-public class SecurityAuthentication implements AuthenticationProvider {
+public class SecurityAuthenticationProvider implements AuthenticationProvider {
+    /**
+     * 注入我们自己定义的用户信息获取对象
+     */
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserDetailsService userDetailService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String username = authentication.getName();
-        String password = (String) authentication.getCredentials();
-        //TODO:缺少判断是否存在用户逻辑，待添加
-        LoginUser loginUser = new LoginUser();
-        Collection<? extends GrantedAuthority> authorities = loginUser.getAuthorities();
-        return new UsernamePasswordAuthenticationToken(loginUser,password,authorities);
+        String userName = authentication.getName();//用户名
+        String password = (String) authentication.getCredentials();//密码
+        UserDetails userDetails = userDetailService.loadUserByUsername(userName);
+        return new UsernamePasswordAuthenticationToken(userDetails, password);// 构建返回的用户登录成功的token
     }
 
-    /**
-     * 执行支持判断
-     *
-     * @param aClass
-     * @return
-     */
     @Override
     public boolean supports(Class<?> aClass) {
         return true;
