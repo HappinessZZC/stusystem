@@ -44,15 +44,14 @@ public class LoginUser implements UserDetails {
         return null;
     }
 
-    //todo:用户信息暂时默认
     @Override
     public String getPassword() {
-        return "123";
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return "123";
+        return user.getUserName();
     }
 
     /**

@@ -10,6 +10,6 @@ public class UserPasswordNotMatchException extends UserException
 
     public UserPasswordNotMatchException()
     {
-        super("用户名/密码", null);
+        super("用户名/密码 不正确", null);
     }
 }

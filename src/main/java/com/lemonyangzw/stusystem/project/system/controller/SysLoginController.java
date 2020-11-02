@@ -34,14 +34,9 @@ public class SysLoginController {
     @PostMapping("/login")
     public AjaxResult login(@RequestBody Map<String, String> map) {
         AjaxResult ajax = AjaxResult.success();
-        try{
-            throw new Exception();
-        }catch (Exception e){
-            throw new UserPasswordNotMatchException();
-        }
-//        String token = sysLoginService.login(map);
-//        ajax.put("token", token);
-//        return ajax;
+        String token = sysLoginService.login(map);
+        ajax.put("token", token);
+        return ajax;
     }
 
     @ApiOperation("获取用户信息")
@@ -51,11 +46,11 @@ public class SysLoginController {
         // 角色集合
         Set<String> roles = new HashSet<String>();
         roles.add("admin");
-        ajax.put("user", JsonUtils.string2Obj("{\"username\": \"123\"}", JsonNode.class));
+        ajax.put("user", JsonUtils.string2Obj("{\"username\": \"admin\"}", JsonNode.class));
         ajax.put("roles",roles);
         ajax.put("permissions", roles);
         System.out.println("123");
-        return ajax;
+       return ajax;
     }
 
 }

@@ -3,12 +3,18 @@ package com.lemonyangzw.stusystem.framework.security.provider;
 import com.lemonyangzw.stusystem.framework.security.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @author Yang
@@ -26,8 +32,19 @@ public class SecurityAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String userName = authentication.getName();//用户名
         String password = (String) authentication.getCredentials();//密码
-        UserDetails userDetails = userDetailService.loadUserByUsername(userName);
-        return new UsernamePasswordAuthenticationToken(userDetails, password);// 构建返回的用户登录成功的token
+        LoginUser LoginUser = (LoginUser) userDetailService.loadUserByUsername(userName);
+        if (LoginUser == null) {
+            throw new UsernameNotFoundException("用户不存在");
+        }
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        passwordEncoder.encode(password);
+        if (!passwordEncoder.matches(password, LoginUser.getPassword())) {
+            throw new BadCredentialsException("密码不正确");
+        }
+
+        return new UsernamePasswordAuthenticationToken(
+                LoginUser, password);// 构建返回的用户登录成功的token
     }
 
     @Override
