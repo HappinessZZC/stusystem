@@ -1,5 +1,6 @@
 package com.lemonyangzw.stusystem.framework.security;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lemonyangzw.stusystem.project.system.domain.SysUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,19 +45,23 @@ public class LoginUser implements UserDetails {
         return null;
     }
 
+    @JsonIgnore
     @Override
-    public String getPassword() {
+    public String getPassword()
+    {
         return user.getPassword();
     }
-
+    @JsonIgnore
     @Override
-    public String getUsername() {
+    public String getUsername()
+    {
         return user.getUserName();
     }
 
     /**
      * 账户是否未过期,过期无法验证
      */
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -67,6 +72,7 @@ public class LoginUser implements UserDetails {
      *
      * @return
      */
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
@@ -77,6 +83,7 @@ public class LoginUser implements UserDetails {
      *
      * @return
      */
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
@@ -87,6 +94,7 @@ public class LoginUser implements UserDetails {
      *
      * @return
      */
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;
