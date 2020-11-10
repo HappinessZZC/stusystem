@@ -28,6 +28,10 @@ public class LoginUser implements UserDetails {
         super();
     }
 
+    public LoginUser(SysUser user) {
+        this.user = user;
+    }
+
     public String getToken() {
         return token;
     }
@@ -36,7 +40,11 @@ public class LoginUser implements UserDetails {
         this.token = token;
     }
 
-    public LoginUser(SysUser user) {
+    public SysUser getUser() {
+        return user;
+    }
+
+    public void setUser(SysUser user) {
         this.user = user;
     }
 

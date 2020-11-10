@@ -126,7 +126,7 @@ public class TokenUtils {
         redisTemplate.opsForValue().set(userKey, loginUser, tokenExpireTime, TimeUnit.MINUTES);
     }
 
-    private String getTokenKey(String uuid)
+    public String getTokenKey(String uuid)
     {
         return Constants.LOGIN_TOKEN_KEY + uuid;
     }

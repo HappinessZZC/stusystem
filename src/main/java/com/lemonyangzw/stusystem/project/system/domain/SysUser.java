@@ -1,5 +1,6 @@
 package com.lemonyangzw.stusystem.project.system.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lemonyangzw.stusystem.framework.web.domain.BaseEntity;
 
 import java.util.Date;
@@ -50,6 +51,7 @@ public class SysUser extends BaseEntity {
     /**
      * 密码
      */
+    @JsonIgnore
     private String password;
 
     /**

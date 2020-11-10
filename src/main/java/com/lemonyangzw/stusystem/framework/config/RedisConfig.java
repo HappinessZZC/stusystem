@@ -31,7 +31,9 @@ public class RedisConfig extends CachingConfigurerSupport {
         Jackson2JsonRedisSerializer serializer = new Jackson2JsonRedisSerializer(Object.class);
 
         ObjectMapper mapper = new ObjectMapper();
+        //前面参数决定可序列化的构造器类型,后面的决定修饰符范围
         mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        //前面参数默认设置,后面决定可序列化的类的类型
         mapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,ObjectMapper.DefaultTyping.NON_FINAL);
 //        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         serializer.setObjectMapper(mapper);

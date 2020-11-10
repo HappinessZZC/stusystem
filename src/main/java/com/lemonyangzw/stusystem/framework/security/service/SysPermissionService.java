@@ -1,6 +1,8 @@
 package com.lemonyangzw.stusystem.framework.security.service;
 
+import com.lemonyangzw.stusystem.common.utils.RoleUtils;
 import com.lemonyangzw.stusystem.project.system.domain.SysUser;
+import com.lemonyangzw.stusystem.project.system.service.SysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +15,11 @@ import java.util.Set;
  */
 @Component
 public class SysPermissionService {
+    @Autowired
+    private RoleUtils roleUtils;
+
+    @Autowired
+    private SysMenuService sysMenuService;
     /**
      * 获取菜单数据权限
      *
@@ -22,6 +29,14 @@ public class SysPermissionService {
     public Set<String> getMenuPermission(SysUser user)
     {
         Set<String> perms = new HashSet<String>();
+        if (roleUtils.isAdmin(user.getUserId()))
+        {
+            perms.add("*:*:*");
+        }
+        else
+        {
+            perms.addAll(sysMenuService.selectMenuPermsssionByUserId(user.getUserId()));
+        }
         return perms;
     }
 }

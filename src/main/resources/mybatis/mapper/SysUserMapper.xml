@@ -34,4 +34,7 @@
         <include refid="selectUserVo"/>
         where u.user_name = #{userName}
     </select>
+    <select id="selectAll" resultMap="SysUserResult">
+        <include refid="selectUserVo"/>
+    </select>
 </mapper>

@@ -18,7 +18,6 @@
     <properties>
         <java.version>1.8</java.version>
         <mybatis.spring.boot.starter.version>2.1.3</mybatis.spring.boot.starter.version>
-        <!--        <spring-security.version>5.1.2.RELEASE</spring-security.version>-->
     </properties>
 
     <dependencies>
@@ -109,6 +108,7 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!--  API测试 swagger2-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -144,21 +144,20 @@
             <version>2.9.2</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus</artifactId>
-            <version>3.4.0</version>
-        </dependency>
+        <!-- EXCEL操作-->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>4.1.2</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba</groupId>-->
-<!--            <artifactId>fastjson</artifactId>-->
-<!--            <version>1.2.9</version>-->
-<!--        </dependency>-->
+
+        <!-- 分页插件PageHelper-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.3.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>

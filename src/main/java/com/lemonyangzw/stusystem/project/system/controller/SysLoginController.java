@@ -3,16 +3,23 @@ package com.lemonyangzw.stusystem.project.system.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.lemonyangzw.stusystem.common.exception.UserPasswordNotMatchException;
 import com.lemonyangzw.stusystem.common.utils.JsonUtils;
+import com.lemonyangzw.stusystem.common.utils.StringUtils;
+import com.lemonyangzw.stusystem.common.utils.TokenUtils;
+import com.lemonyangzw.stusystem.framework.security.LoginUser;
 import com.lemonyangzw.stusystem.framework.web.domain.AjaxResult;
 import com.lemonyangzw.stusystem.framework.security.service.SysLoginService;
+import com.lemonyangzw.stusystem.project.system.domain.SysMenu;
+import com.lemonyangzw.stusystem.project.system.domain.SysRole;
+import com.lemonyangzw.stusystem.project.system.domain.SysUser;
+import com.lemonyangzw.stusystem.project.system.service.SysMenuService;
+import com.lemonyangzw.stusystem.project.system.service.SysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 /**
  * @author Yang
@@ -23,13 +30,15 @@ import java.util.Set;
 @RestController
 public class SysLoginController {
     @Autowired
-    public SysLoginService sysLoginService;
+    private SysLoginService sysLoginService;
+    @Autowired
+    private SysMenuService sysMenuService;
+    @Autowired
+    private TokenUtils tokenUtils;
+    @Autowired
+    private SysRoleService sysRoleService;
 
-    /**
-     *
-     * @param map key:username,password,token
-     * @return
-     */
+
     @ApiOperation("登录验证")
     @PostMapping("/login")
     public AjaxResult login(@RequestBody Map<String, String> map) {
@@ -41,16 +50,32 @@ public class SysLoginController {
 
     @ApiOperation("获取用户信息")
     @GetMapping("/getInfo")
-    public AjaxResult getInfo(){
+    public AjaxResult getInfo(HttpServletRequest request){
+        SysUser user = tokenUtils.getLoginUser(request).getUser();
         AjaxResult ajax = AjaxResult.success();
         // 角色集合
-        Set<String> roles = new HashSet<String>();
-        roles.add("admin");
-        ajax.put("user", JsonUtils.string2Obj("{\"username\": \"admin\"}", JsonNode.class));
+        List<SysRole> sysRoles = sysRoleService.getSysRoleByUserId(user.getUserId());
+        Set<String> roles = new HashSet<>();
+        for (SysRole sysRole : sysRoles) {
+            if(StringUtils.isNotNull(sysRole)){
+                roles.addAll(Arrays.asList(sysRole.getRoleKey().trim().split(",")));
+            }
+        }
+        ajax.put("user", user);
         ajax.put("roles",roles);
         ajax.put("permissions", roles);
-        System.out.println("123");
        return ajax;
+    }
+
+    @ApiOperation("获取路由信息")
+    @GetMapping("getRouters")
+    public AjaxResult getRouters(HttpServletRequest request)
+    {
+        LoginUser loginUser = tokenUtils.getLoginUser(request);
+        // 用户信息
+        SysUser user = loginUser.getUser();
+        List<SysMenu> menus = sysMenuService.selectMenuTreeByUserId(user.getUserId());
+        return AjaxResult.success(sysMenuService.buildMenus(menus));
     }
 
 }
