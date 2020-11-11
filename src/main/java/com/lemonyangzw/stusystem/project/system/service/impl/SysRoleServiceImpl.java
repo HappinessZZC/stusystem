@@ -17,7 +17,11 @@ import java.util.List;
 public class SysRoleServiceImpl implements SysRoleService {
     @Autowired
     private SysRoleMapper sysroleMapper;
-
+    /**
+     * 根据用户ID获取角色
+     * @param id
+     * @return List<SysRole>
+     */
     @Override
     public List<SysRole> getSysRoleByUserId(Long userId) {
         return sysroleMapper.selectByUserId(userId);

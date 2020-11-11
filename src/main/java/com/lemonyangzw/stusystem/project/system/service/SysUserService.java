@@ -11,7 +11,16 @@ import java.util.List;
  */
 
 public interface SysUserService {
+    /**
+     * 根据用户名获取用户信息
+     * @param username 用户名
+     * @return SysUser 用户
+     */
     SysUser selectUserByUserName(String username);
 
+    /**
+     * 获取全部的用户
+     * @return List<SysUser>
+     */
     List<SysUser> getUserAll();
 }

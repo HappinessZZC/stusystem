@@ -24,7 +24,7 @@ public class SysMenuServiceImpl implements SysMenuService {
     @Autowired
     private SysMenuMapper sysMenuMapper;
     /**
-     * 根据用户ID查询菜单
+     * 根据用户ID查询菜单树
      *
      * @param userId 用户名称
      * @return 菜单列表
@@ -81,6 +81,11 @@ public class SysMenuServiceImpl implements SysMenuService {
         return routers;
     }
 
+    /**
+     * 根据用户ID获取菜单权限
+     * @param userId 用户ID
+     * @return Set<String>
+     */
     @Override
     public Set<String> selectMenuPermsssionByUserId(Long userId) {
         List<String> perms = sysMenuMapper.selectMenuPermsByUserId(userId);

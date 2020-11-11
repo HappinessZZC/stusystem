@@ -23,11 +23,21 @@ import java.util.List;
 public class SysUserServiceImpl implements SysUserService {
     @Autowired
     private SysUserMapper sysUserMapper;
+
+    /**
+     * 根据用户名获取用户信息
+     * @param username 用户名
+     * @return SysUser 用户
+     */
     @Override
     public SysUser selectUserByUserName(String username) {
         return sysUserMapper.selectUserByUserName(username);
     }
 
+    /**
+     * 获取全部的用户
+     * @return List<SysUser>
+     */
     public List<SysUser> getUserAll(){
         PageUtils.startPageByRequest();
         return sysUserMapper.selectAll();
