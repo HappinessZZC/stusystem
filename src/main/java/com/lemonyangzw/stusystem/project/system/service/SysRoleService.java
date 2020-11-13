@@ -16,4 +16,5 @@ public interface SysRoleService {
      */
     List<SysRole> getSysRoleByUserId(Long id);
 
+    List<SysRole> getRoleAll();
 }

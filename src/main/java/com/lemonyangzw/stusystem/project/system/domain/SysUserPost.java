@@ -3,12 +3,16 @@ package com.lemonyangzw.stusystem.project.system.domain;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class SysUserRole {
+/**
+ * @author Yang
+ * @date 2020/11/12 13:56
+ */
+public class SysUserPost {
     /** 用户ID */
     private Long userId;
 
-    /** 角色ID */
-    private Long roleId;
+    /** 岗位ID */
+    private Long postId;
 
     public Long getUserId()
     {
@@ -20,21 +24,21 @@ public class SysUserRole {
         this.userId = userId;
     }
 
-    public Long getRoleId()
+    public Long getPostId()
     {
-        return roleId;
+        return postId;
     }
 
-    public void setRoleId(Long roleId)
+    public void setPostId(Long postId)
     {
-        this.roleId = roleId;
+        this.postId = postId;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
                 .append("userId", getUserId())
-                .append("roleId", getRoleId())
+                .append("postId", getPostId())
                 .toString();
     }
 }

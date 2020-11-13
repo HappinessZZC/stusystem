@@ -32,6 +32,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         LoginUser loginUser = tokenUtils.getLoginUser(request);
         if (StringUtils.isNotNull(loginUser) && StringUtils.isNull(SecurityContextHolder.getContext().getAuthentication())) {
+            tokenUtils.refreshToken(loginUser);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
             //WebAuthenticationDetails 中定义的属性保存了用户登录地址和 sessionId。
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

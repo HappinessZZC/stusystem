@@ -26,4 +26,13 @@ public class SysRoleServiceImpl implements SysRoleService {
     public List<SysRole> getSysRoleByUserId(Long userId) {
         return sysroleMapper.selectByUserId(userId);
     }
+
+    /**
+     * 获取全部的用户角色
+     * @return List<SysRole>
+     */
+    @Override
+    public List<SysRole> getRoleAll() {
+        return sysroleMapper.getRoleAll();
+    }
 }

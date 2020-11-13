@@ -7,4 +7,6 @@ import java.util.List;
 public interface SysRoleMapper {
 
     List<SysRole> selectByUserId(Long userId);
+
+    List<SysRole> getRoleAll();
 }

@@ -23,4 +23,34 @@ public interface SysUserService {
      * @return List<SysUser>
      */
     List<SysUser> getUserAll();
+    /**
+     * 校验用户名称是否唯一
+     *
+     * @param userName 用户名称
+     * @return 结果
+     */
+    String checkUserNameUnique(String userName);
+
+    /**
+     * 校验手机号码是否唯一
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    String checkPhoneUnique(SysUser user);
+
+    /**
+     * 校验email是否唯一
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    String checkEmailUnique(SysUser user);
+    /**
+     * 新增用户信息
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    int insertUser(SysUser user);
 }

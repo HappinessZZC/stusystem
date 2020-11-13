@@ -18,7 +18,7 @@ import java.util.List;
 @Api("部门信息")
 @RestController
 @RequestMapping("/system/dept")
-public class SysdeptController {
+public class SysDeptController {
     @Autowired
     private SysDeptService sysDeptService;
     /**

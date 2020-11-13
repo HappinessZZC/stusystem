@@ -1,9 +1,11 @@
 package com.lemonyangzw.stusystem.project.system.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lemonyangzw.stusystem.framework.web.domain.BaseEntity;
 
 import java.util.Date;
+import java.util.List;
 
 public class SysUser extends BaseEntity {
     private static final long serialVersionUID = 1L;
@@ -51,7 +53,6 @@ public class SysUser extends BaseEntity {
     /**
      * 密码
      */
-    @JsonIgnore
     private String password;
 
     /**
@@ -82,12 +83,12 @@ public class SysUser extends BaseEntity {
     /**
      * 部门对象
      */
-//    private SysDept dept;
+    private SysDept dept;
 
     /**
      * 角色对象
      */
-//    private List<SysRole> roles;
+    private List<SysRole> roles;
 
     /**
      * 角色组
@@ -98,6 +99,8 @@ public class SysUser extends BaseEntity {
      * 岗位组
      */
     private Long[] postIds;
+
+
 
     public SysUser() {
 
@@ -171,10 +174,12 @@ public class SysUser extends BaseEntity {
         this.avatar = avatar;
     }
 
+    @JsonProperty
     public String getPassword() {
         return password;
     }
 
+    @JsonIgnore
     public void setPassword(String password) {
         this.password = password;
     }
