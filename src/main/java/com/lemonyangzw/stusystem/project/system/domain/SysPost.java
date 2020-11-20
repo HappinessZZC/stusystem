@@ -1,5 +1,7 @@
 package com.lemonyangzw.stusystem.project.system.domain;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -138,5 +140,21 @@ public class SysPost implements Serializable {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("postId", postId)
+                .append("postCode", postCode)
+                .append("postName", postName)
+                .append("postSort", postSort)
+                .append("status", status)
+                .append("createBy", createBy)
+                .append("createTime", createTime)
+                .append("updateBy", updateBy)
+                .append("updateTime", updateTime)
+                .append("remark", remark)
+                .toString();
     }
 }

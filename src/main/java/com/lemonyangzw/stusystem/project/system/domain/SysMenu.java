@@ -1,6 +1,7 @@
 package com.lemonyangzw.stusystem.project.system.domain;
 
 import com.lemonyangzw.stusystem.framework.web.domain.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -246,7 +247,27 @@ public class SysMenu implements Serializable {
         this.remark = remark;
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("menuId", menuId)
+                .append("menuName", menuName)
+                .append("parentId", parentId)
+                .append("orderNum", orderNum)
+                .append("path", path)
+                .append("component", component)
+                .append("isFrame", isFrame)
+                .append("menuType", menuType)
+                .append("visible", visible)
+                .append("status", status)
+                .append("perms", perms)
+                .append("icon", icon)
+                .append("createBy", createBy)
+                .append("createTime", createTime)
+                .append("updateBy", updateBy)
+                .append("updateTime", updateTime)
+                .append("remark", remark)
+                .append("children", children)
+                .toString();
     }
 }

@@ -53,4 +53,12 @@ public interface SysUserService {
      * @return 结果
      */
     int insertUser(SysUser user);
+
+    /**
+     * 批量删除用户信息
+     *
+     * @param userIds 需要删除的用户ID
+     * @return 结果
+     */
+    int deleteUserByIds(Long[] userIds);
 }

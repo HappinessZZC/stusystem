@@ -3,6 +3,7 @@ package com.lemonyangzw.stusystem.common.utils;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.IdUtil;
 import com.lemonyangzw.stusystem.common.constant.Constants;
+import com.lemonyangzw.stusystem.common.constant.TokenConstants;
 import com.lemonyangzw.stusystem.framework.security.LoginUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -45,8 +46,8 @@ public class TokenUtils {
      */
     public String getToken(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader);
-        if (StringUtils.isNotEmpty(token) && token.startsWith(Constants.TOKEN_PREFIX)) {
-            token = token.replace(Constants.TOKEN_PREFIX, "");
+        if (StringUtils.isNotEmpty(token) && token.startsWith(TokenConstants.TOKEN_PREFIX)) {
+            token = token.replace(TokenConstants.TOKEN_PREFIX, "");
 
         }
         return token;
@@ -62,7 +63,7 @@ public class TokenUtils {
         if (StringUtils.isNotEmpty(token)) {
             Claims claims = parseToken(token);
             // 解析对应的权限以及用户信息
-            String uuid = (String) claims.get(Constants.LOGIN_USER_KEY);
+            String uuid = (String) claims.get(TokenConstants.LOGIN_USER_KEY);
             String userKey = getTokenKey(uuid);
             LoginUser user = (LoginUser)redisTemplate.opsForValue().get(userKey);
 
@@ -99,7 +100,7 @@ public class TokenUtils {
         refreshToken(loginUser);
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put(Constants.LOGIN_USER_KEY, token);
+        claims.put(TokenConstants.LOGIN_USER_KEY, token);
         return createToken(claims);
     }
 
@@ -128,6 +129,6 @@ public class TokenUtils {
 
     public String getTokenKey(String uuid)
     {
-        return Constants.LOGIN_TOKEN_KEY + uuid;
+        return TokenConstants.LOGIN_TOKEN_KEY + uuid;
     }
 }

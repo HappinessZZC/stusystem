@@ -1,10 +1,7 @@
 package com.lemonyangzw.stusystem.common.utils;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
 /**
  * Jackson的工具类

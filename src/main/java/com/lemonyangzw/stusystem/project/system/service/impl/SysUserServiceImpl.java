@@ -3,8 +3,10 @@ package com.lemonyangzw.stusystem.project.system.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.lemonyangzw.stusystem.common.constant.UserConstants;
+import com.lemonyangzw.stusystem.common.exception.CustomException;
 import com.lemonyangzw.stusystem.common.utils.HttpServletRequstHelper;
 import com.lemonyangzw.stusystem.common.utils.PageUtils;
+import com.lemonyangzw.stusystem.common.utils.RoleUtils;
 import com.lemonyangzw.stusystem.common.utils.StringUtils;
 import com.lemonyangzw.stusystem.project.system.domain.SysUser;
 import com.lemonyangzw.stusystem.project.system.domain.SysUserPost;
@@ -35,6 +37,8 @@ public class SysUserServiceImpl implements SysUserService {
     private SysUserRoleMapper sysUserRoleMapper;
     @Autowired
     private SysUserPostMapper sysUserPostMapper;
+    @Autowired
+    private RoleUtils roleUtils;
 
     /**
      * 根据用户名获取用户信息
@@ -177,5 +181,22 @@ public class SysUserServiceImpl implements SysUserService {
                 sysUserRoleMapper.batchUserRole(list);
             }
         }
+    }
+
+    /**
+     * 批量删除用户信息
+     *
+     * @param userIds 需要删除的用户ID
+     * @return 结果
+     */
+    public int deleteUserByIds(Long[] userIds)
+    {
+        for (Long userId : userIds)
+        {
+            if(roleUtils.isAdmin(userId)){
+                throw new CustomException("不允许操作超级管理员用户");
+            }
+        }
+        return sysUserMapper.deleteUserByIds (userIds);
     }
 }

@@ -65,3 +65,9 @@ mapper:
     - com.lemonyangzw.stusystem.common.utils.BaseMapper
   not-empty: false
   identity: MYSQL
+
+# 日志配置
+logging:
+  level:
+    com.lemonyangzw.stusystem: debug
+    org.springframework: warn

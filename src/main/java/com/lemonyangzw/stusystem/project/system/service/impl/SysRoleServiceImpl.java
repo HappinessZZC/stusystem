@@ -19,7 +19,7 @@ public class SysRoleServiceImpl implements SysRoleService {
     private SysRoleMapper sysroleMapper;
     /**
      * 根据用户ID获取角色
-     * @param id
+     * @param userId
      * @return List<SysRole>
      */
     @Override

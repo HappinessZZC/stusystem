@@ -1,5 +1,7 @@
 package com.lemonyangzw.stusystem.project.system.domain.vo;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  * 路由显示信息
  * 
@@ -45,5 +47,13 @@ public class MetaVo
     public void setIcon(String icon)
     {
         this.icon = icon;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("title", title)
+                .append("icon", icon)
+                .toString();
     }
 }

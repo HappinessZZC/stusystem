@@ -3,6 +3,7 @@ package com.lemonyangzw.stusystem.project.system.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lemonyangzw.stusystem.framework.web.domain.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Date;
 import java.util.List;
@@ -238,5 +239,29 @@ public class SysUser extends BaseEntity {
 
     public void setPostIds(Long[] postIds) {
         this.postIds = postIds;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("userId", userId)
+                .append("deptId", deptId)
+                .append("userName", userName)
+                .append("nickName", nickName)
+                .append("email", email)
+                .append("phonenumber", phonenumber)
+                .append("sex", sex)
+                .append("avatar", avatar)
+                .append("password", password)
+                .append("salt", salt)
+                .append("status", status)
+                .append("delFlag", delFlag)
+                .append("loginIp", loginIp)
+                .append("loginDate", loginDate)
+                .append("dept", dept)
+                .append("roles", roles)
+                .append("roleIds", roleIds)
+                .append("postIds", postIds)
+                .toString();
     }
 }

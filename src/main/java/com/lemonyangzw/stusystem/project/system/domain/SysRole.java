@@ -1,5 +1,7 @@
 package com.lemonyangzw.stusystem.project.system.domain;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.util.Date;
 
 public class SysRole {
@@ -397,5 +399,23 @@ public class SysRole {
      */
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("roleId", roleId)
+                .append("roleName", roleName)
+                .append("roleKey", roleKey)
+                .append("roleSort", roleSort)
+                .append("dataScope", dataScope)
+                .append("status", status)
+                .append("delFlag", delFlag)
+                .append("createBy", createBy)
+                .append("createTime", createTime)
+                .append("updateBy", updateBy)
+                .append("updateTime", updateTime)
+                .append("remark", remark)
+                .toString();
     }
 }

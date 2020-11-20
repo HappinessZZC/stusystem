@@ -1,5 +1,7 @@
 package com.lemonyangzw.stusystem.project.system.domain;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -218,5 +220,27 @@ public class SysDept implements Serializable {
 
     public void setChildren(List<SysDept> children) {
         this.children = children;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("deptId", deptId)
+                .append("parentId", parentId)
+                .append("ancestors", ancestors)
+                .append("deptName", deptName)
+                .append("orderNum", orderNum)
+                .append("leader", leader)
+                .append("phone", phone)
+                .append("email", email)
+                .append("status", status)
+                .append("delFlag", delFlag)
+                .append("createBy", createBy)
+                .append("createTime", createTime)
+                .append("updateBy", updateBy)
+                .append("updateTime", updateTime)
+                .append("parentName", parentName)
+                .append("children", children)
+                .toString();
     }
 }

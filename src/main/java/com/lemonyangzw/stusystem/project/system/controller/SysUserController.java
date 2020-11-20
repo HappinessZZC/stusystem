@@ -20,6 +20,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 /**
  * @author Yang
  * @date 2020/11/9 9:24
@@ -38,9 +45,8 @@ public class SysUserController {
     /**
      * 根据用户编号获取详细信息
      */
-    @GetMapping(value = { "/", "/{userId}" })
-    public AjaxResult getInfo(@PathVariable(value = "userId", required = false) Long userId)
-    {
+    @GetMapping(value = {"/", "/{userId}"})
+    public AjaxResult getInfo(@PathVariable(value = "userId", required = false) Long userId) {
         AjaxResult ajax = AjaxResult.success();
         ajax.put("roles", sysRoleService.getRoleAll());
         ajax.put("posts", sysPostService.getPostAll());
@@ -57,18 +63,12 @@ public class SysUserController {
      * 新增用户
      */
     @PostMapping
-    public AjaxResult add(@RequestBody SysUser user)
-    {
-        if (UserConstants.NOT_UNIQUE.equals(sysUserService.checkUserNameUnique(user.getUserName())))
-        {
+    public AjaxResult add(@RequestBody SysUser user) {
+        if (UserConstants.NOT_UNIQUE.equals(sysUserService.checkUserNameUnique(user.getUserName()))) {
             return AjaxResult.error("新增用户'" + user.getUserName() + "'失败，登录账号已存在");
-        }
-        else if (UserConstants.NOT_UNIQUE.equals(sysUserService.checkPhoneUnique(user)))
-        {
+        } else if (UserConstants.NOT_UNIQUE.equals(sysUserService.checkPhoneUnique(user))) {
             return AjaxResult.error("新增用户'" + user.getUserName() + "'失败，手机号码已存在");
-        }
-        else if (UserConstants.NOT_UNIQUE.equals(sysUserService.checkEmailUnique(user)))
-        {
+        } else if (UserConstants.NOT_UNIQUE.equals(sysUserService.checkEmailUnique(user))) {
             return AjaxResult.error("新增用户'" + user.getUserName() + "'失败，邮箱账号已存在");
         }
         user.setCreateBy(SecurityUtils.getUsername());
@@ -77,9 +77,21 @@ public class SysUserController {
     }
 
     @ApiOperation("用户列表")
-    @GetMapping(value = "/getUserInfoList",produces = "application/json;charset=UTF-8")
-    public String getUserInfoList(){
+    @GetMapping(value = "/getUserInfoList", produces = "application/json;charset=UTF-8")
+    public String getUserInfoList() {
         return JsonUtils.toJsonString(new PageInfo(sysUserService.getUserAll()));
     }
+
+    /**
+     * 删除用户
+     */
+    @DeleteMapping("/{userIds}")
+    public AjaxResult remove(@PathVariable Long[] userIds) {
+        Map hashMap = new HashMap() {{
+            put("1", "1");
+        }};
+        return AjaxResult.toAjax(sysUserService.deleteUserByIds(userIds));
+    }
+
 }
 

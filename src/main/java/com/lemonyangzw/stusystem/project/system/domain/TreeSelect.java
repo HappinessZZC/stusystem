@@ -1,6 +1,7 @@
 package com.lemonyangzw.stusystem.project.system.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
 import java.util.List;
@@ -70,5 +71,14 @@ public class TreeSelect implements Serializable {
     public void setChildren(List<TreeSelect> children)
     {
         this.children = children;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("label", label)
+                .append("children", children)
+                .toString();
     }
 }

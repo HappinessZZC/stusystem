@@ -1,5 +1,7 @@
 package com.lemonyangzw.stusystem.common.constant;
 
+import cn.hutool.http.HttpStatus;
+
 /**
  * 用户常量信息
  * 
