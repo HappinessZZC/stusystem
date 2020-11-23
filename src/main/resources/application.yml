@@ -18,7 +18,7 @@ token:
   # 令牌自定义标识
   header: Authorization
   # 令牌有效期（默认30分钟）
-  expireTime: 30
+  expireTime: 0
   # 密钥
   key : 12345_ssdlh_lhbcf_zcdhd_cmbjx_ccwtn_ylfys_hlzds
 

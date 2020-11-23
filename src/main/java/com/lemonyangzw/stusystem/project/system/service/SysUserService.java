@@ -61,4 +61,12 @@ public interface SysUserService {
      * @return 结果
      */
     int deleteUserByIds(Long[] userIds);
+
+    /**
+     * 通过用户ID查询用户
+     *
+     * @param userId 用户ID
+     * @return 用户对象信息
+     */
+    SysUser selectUserById(Long userId);
 }

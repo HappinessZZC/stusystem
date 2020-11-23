@@ -9,4 +9,6 @@ public interface SysRoleMapper {
     List<SysRole> selectByUserId(Long userId);
 
     List<SysRole> getRoleAll();
+
+    List<Integer> selectRoleListByUserId(Long userId);
 }

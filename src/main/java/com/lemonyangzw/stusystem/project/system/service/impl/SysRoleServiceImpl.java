@@ -35,4 +35,14 @@ public class SysRoleServiceImpl implements SysRoleService {
     public List<SysRole> getRoleAll() {
         return sysroleMapper.getRoleAll();
     }
+    /**
+     * 根据用户ID获取角色选择框列表
+     *
+     * @param userId 用户ID
+     * @return 选中角色ID列表
+     */
+    public List<Integer> selectRoleListByUserId(Long userId)
+    {
+        return sysroleMapper.selectRoleListByUserId(userId);
+    }
 }

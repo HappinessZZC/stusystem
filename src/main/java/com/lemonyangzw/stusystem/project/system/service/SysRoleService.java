@@ -17,4 +17,13 @@ public interface SysRoleService {
     List<SysRole> getSysRoleByUserId(Long id);
 
     List<SysRole> getRoleAll();
+
+    /**
+     * 根据用户ID获取角色选择框列表
+     *
+     * @param userId 用户ID
+     * @return 选中角色ID列表
+     */
+    List<Integer> selectRoleListByUserId(Long userId);
+
 }

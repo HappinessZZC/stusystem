@@ -20,4 +20,15 @@ public class SysPostServiceImpl implements SysPostService {
     public List<SysPost> getPostAll() {
         return sysPostMapper.getPostAll();
     }
+
+    /**
+     * 根据用户ID获取岗位选择框列表
+     *
+     * @param userId 用户ID
+     * @return 选中岗位ID列表
+     */
+    public List<Integer> selectPostListByUserId(Long userId)
+    {
+        return sysPostMapper.selectPostListByUserId(userId);
+    }
 }

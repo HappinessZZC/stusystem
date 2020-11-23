@@ -2,7 +2,6 @@ package com.lemonyangzw.stusystem.common.utils;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.IdUtil;
-import com.lemonyangzw.stusystem.common.constant.Constants;
 import com.lemonyangzw.stusystem.common.constant.TokenConstants;
 import com.lemonyangzw.stusystem.framework.security.LoginUser;
 import io.jsonwebtoken.Claims;
@@ -124,7 +123,11 @@ public class TokenUtils {
     {
         // 根据uuid将loginUser缓存
         String userKey = getTokenKey(loginUser.getToken());
-        redisTemplate.opsForValue().set(userKey, loginUser, tokenExpireTime, TimeUnit.MINUTES);
+        if(this.tokenExpireTime <= 0 ){
+            redisTemplate.opsForValue().set(userKey, loginUser);
+        }else {
+            redisTemplate.opsForValue().set(userKey, loginUser, tokenExpireTime, TimeUnit.MINUTES);
+        }
     }
 
     public String getTokenKey(String uuid)

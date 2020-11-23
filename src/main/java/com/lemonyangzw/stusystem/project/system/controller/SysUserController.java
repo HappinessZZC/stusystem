@@ -50,12 +50,12 @@ public class SysUserController {
         AjaxResult ajax = AjaxResult.success();
         ajax.put("roles", sysRoleService.getRoleAll());
         ajax.put("posts", sysPostService.getPostAll());
-//        if (StringUtils.isNotNull(userId))
-//        {
-//            ajax.put(AjaxResult.DATA_TAG, userService.selectUserById(userId));
-//            ajax.put("postIds", sysRoleService.selectPostListByUserId(userId));
-//            ajax.put("roleIds", sysPostService.selectRoleListByUserId(userId));
-//        }
+        if (StringUtils.isNotNull(userId))
+        {
+            ajax.put(AjaxResult.DATA_TAG, sysUserService.selectUserById(userId));
+            ajax.put("postIds", sysPostService.selectPostListByUserId(userId));
+            ajax.put("roleIds", sysRoleService.selectRoleListByUserId(userId));
+        }
         return ajax;
     }
 
@@ -76,6 +76,29 @@ public class SysUserController {
         return AjaxResult.toAjax(sysUserService.insertUser(user));
     }
 
+    /**
+     * 修改用户
+     */
+//    @PutMapping
+//    public AjaxResult edit(@RequestBody SysUser user)
+//    {
+//        sysUserService.checkUserAllowed(user);
+//        if (UserConstants.NOT_UNIQUE.equals(sysUserService.checkPhoneUnique(user)))
+//        {
+//            return AjaxResult.error("修改用户'" + user.getUserName() + "'失败，手机号码已存在");
+//        }
+//        else if (UserConstants.NOT_UNIQUE.equals(sysUserService.checkEmailUnique(user)))
+//        {
+//            return AjaxResult.error("修改用户'" + user.getUserName() + "'失败，邮箱账号已存在");
+//        }
+//        user.setUpdateBy(SecurityUtils.getUsername());
+//        return AjaxResult.toAjax(sysUserService.updateUser(user));
+//    }
+
+    /**
+     * 获取所有用户的列表
+     * @return userInfoList
+     */
     @ApiOperation("用户列表")
     @GetMapping(value = "/getUserInfoList", produces = "application/json;charset=UTF-8")
     public String getUserInfoList() {
