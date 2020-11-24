@@ -211,4 +211,63 @@ public class SysUserServiceImpl implements SysUserService {
     {
         return sysUserMapper.selectUserById(userId);
     }
+
+    /**
+     * 校验用户是否允许操作
+     *
+     * @param user 用户信息
+     */
+    public void checkUserAllowed(SysUser user)
+    {
+        if (StringUtils.isNotNull(user.getUserId()) && roleUtils.isAdmin(user.getUserId()))
+        {
+            throw new CustomException("不允许操作超级管理员用户");
+        }
+    }
+
+    /**
+     * 修改保存用户信息
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    @Override
+    @Transactional
+    public int updateUser(SysUser user)
+    {
+        Long userId = user.getUserId();
+        // 删除用户与角色关联
+        sysUserRoleMapper.deleteUserRoleByUserId(userId);
+        // 新增用户与角色管理
+        insertUserRole(user);
+        // 删除用户与岗位关联
+        sysUserPostMapper.deleteUserPostByUserId(userId);
+        // 新增用户与岗位管理
+        insertUserPost(user);
+        return sysUserMapper.updateUser(user);
+    }
+
+    /**
+     * 修改用户状态
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    @Override
+    public int updateUserStatus(SysUser user)
+    {
+        return sysUserMapper.updateUser(user);
+    }
+
+    /**
+     * 重置用户密码
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    @Override
+    public int resetPwd(SysUser user)
+    {
+        return sysUserMapper.updateUser(user);
+    }
 }

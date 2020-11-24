@@ -7,4 +7,8 @@
             (#{item.userId},#{item.postId})
         </foreach>
     </insert>
+
+    <delete id="deleteUserPostByUserId" parameterType="Long">
+        delete from sys_user_post where user_id=#{userId}
+    </delete>
 </mapper>

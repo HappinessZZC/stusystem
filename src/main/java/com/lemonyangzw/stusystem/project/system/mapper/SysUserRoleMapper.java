@@ -13,4 +13,11 @@ public interface SysUserRoleMapper {
      * @return 结果
      */
     int batchUserRole(List<SysUserRole> userRoleList);
+    /**
+     * 通过用户ID删除用户和角色关联
+     *
+     * @param userId 用户ID
+     * @return 结果
+     */
+    int deleteUserRoleByUserId(Long userId);
 }

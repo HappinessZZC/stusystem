@@ -11,4 +11,8 @@
       (#{item.userId},#{item.roleId})
     </foreach>
   </insert>
+
+  <delete id="deleteUserRoleByUserId" parameterType="Long">
+    delete from sys_user_role where user_id=#{userId}
+  </delete>
 </mapper>

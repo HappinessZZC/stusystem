@@ -69,4 +69,35 @@ public interface SysUserService {
      * @return 用户对象信息
      */
     SysUser selectUserById(Long userId);
+
+    /**
+     * 校验用户是否允许操作
+     *
+     * @param user 用户信息
+     */
+    void checkUserAllowed(SysUser user);
+
+    /**
+     * 修改用户信息
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    int updateUser(SysUser user);
+
+    /**
+     * 修改用户状态
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    int updateUserStatus(SysUser user);
+
+    /**
+     * 重置用户密码
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    int resetPwd(SysUser user);
 }

@@ -241,6 +241,22 @@ public class SysUser extends BaseEntity {
         this.postIds = postIds;
     }
 
+    public SysDept getDept() {
+        return dept;
+    }
+
+    public void setDept(SysDept dept) {
+        this.dept = dept;
+    }
+
+    public List<SysRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<SysRole> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this)

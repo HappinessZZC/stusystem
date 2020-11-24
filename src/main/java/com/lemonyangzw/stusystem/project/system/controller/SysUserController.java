@@ -11,21 +11,13 @@ import com.lemonyangzw.stusystem.project.system.service.SysPostService;
 import com.lemonyangzw.stusystem.project.system.service.SysRoleService;
 import com.lemonyangzw.stusystem.project.system.service.SysUserService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author Yang
@@ -79,21 +71,21 @@ public class SysUserController {
     /**
      * 修改用户
      */
-//    @PutMapping
-//    public AjaxResult edit(@RequestBody SysUser user)
-//    {
-//        sysUserService.checkUserAllowed(user);
-//        if (UserConstants.NOT_UNIQUE.equals(sysUserService.checkPhoneUnique(user)))
-//        {
-//            return AjaxResult.error("修改用户'" + user.getUserName() + "'失败，手机号码已存在");
-//        }
-//        else if (UserConstants.NOT_UNIQUE.equals(sysUserService.checkEmailUnique(user)))
-//        {
-//            return AjaxResult.error("修改用户'" + user.getUserName() + "'失败，邮箱账号已存在");
-//        }
-//        user.setUpdateBy(SecurityUtils.getUsername());
-//        return AjaxResult.toAjax(sysUserService.updateUser(user));
-//    }
+    @PutMapping
+    public AjaxResult edit(@RequestBody SysUser user)
+    {
+        sysUserService.checkUserAllowed(user);
+        if (UserConstants.NOT_UNIQUE.equals(sysUserService.checkPhoneUnique(user)))
+        {
+            return AjaxResult.error("修改用户'" + user.getUserName() + "'失败，手机号码已存在");
+        }
+        else if (UserConstants.NOT_UNIQUE.equals(sysUserService.checkEmailUnique(user)))
+        {
+            return AjaxResult.error("修改用户'" + user.getUserName() + "'失败，邮箱账号已存在");
+        }
+        user.setUpdateBy(SecurityUtils.getUsername());
+        return AjaxResult.toAjax(sysUserService.updateUser(user));
+    }
 
     /**
      * 获取所有用户的列表
@@ -116,5 +108,27 @@ public class SysUserController {
         return AjaxResult.toAjax(sysUserService.deleteUserByIds(userIds));
     }
 
+    /**
+     * 状态修改
+     */
+    @PutMapping("/changeStatus")
+    public AjaxResult changeStatus(@RequestBody SysUser user)
+    {
+        sysUserService.checkUserAllowed(user);
+        user.setUpdateBy(SecurityUtils.getUsername());
+        return AjaxResult.toAjax(sysUserService.updateUserStatus(user));
+    }
+
+    /**
+     * 重置密码
+     */
+    @PutMapping("/resetPwd")
+    public AjaxResult resetPwd(@RequestBody SysUser user)
+    {
+        sysUserService.checkUserAllowed(user);
+        user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
+        user.setUpdateBy(SecurityUtils.getUsername());
+        return AjaxResult.toAjax(sysUserService.resetPwd(user));
+    }
 }
 
