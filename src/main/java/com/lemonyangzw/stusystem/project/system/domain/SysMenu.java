@@ -1,104 +1,76 @@
 package com.lemonyangzw.stusystem.project.system.domain;
 
 import com.lemonyangzw.stusystem.framework.web.domain.BaseEntity;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
  * sys_menu
- * @author 
+ *
+ * @author
  */
-public class SysMenu implements Serializable {
+public class SysMenu extends BaseEntity {
+    private static final long serialVersionUID = 1L;
     /**
      * 菜单ID
      */
     private Long menuId;
-
     /**
      * 菜单名称
      */
     private String menuName;
-
+    /**
+     * 父菜单名称
+     */
+    private String parentName;
     /**
      * 父菜单ID
      */
     private Long parentId;
-
     /**
      * 显示顺序
      */
     private Integer orderNum;
-
     /**
      * 路由地址
      */
     private String path;
-
     /**
      * 组件路径
      */
     private String component;
-
     /**
      * 是否为外链（0是 1否）
      */
     private Integer isFrame;
-
     /**
      * 菜单类型（M目录 C菜单 F按钮）
      */
     private String menuType;
-
     /**
      * 菜单状态（0显示 1隐藏）
      */
     private String visible;
-
     /**
      * 菜单状态（0正常 1停用）
      */
     private String status;
-
     /**
      * 权限标识
      */
     private String perms;
-
     /**
      * 菜单图标
      */
     private String icon;
-
-    /**
-     * 创建者
-     */
-    private String createBy;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 更新者
-     */
-    private String updateBy;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
-
     /**
      * 备注
      */
     private String remark;
-
-    /** 子菜单 */
+    /**
+     * 子菜单
+     */
     private List<SysMenu> children = new ArrayList<SysMenu>();
 
     public List<SysMenu> getChildren() {
@@ -108,8 +80,6 @@ public class SysMenu implements Serializable {
     public void setChildren(List<SysMenu> children) {
         this.children = children;
     }
-
-    private static final long serialVersionUID = 1L;
 
     public Long getMenuId() {
         return menuId;
@@ -207,38 +177,6 @@ public class SysMenu implements Serializable {
         this.icon = icon;
     }
 
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUpdateBy() {
-        return updateBy;
-    }
-
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -247,27 +185,11 @@ public class SysMenu implements Serializable {
         this.remark = remark;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("menuId", menuId)
-                .append("menuName", menuName)
-                .append("parentId", parentId)
-                .append("orderNum", orderNum)
-                .append("path", path)
-                .append("component", component)
-                .append("isFrame", isFrame)
-                .append("menuType", menuType)
-                .append("visible", visible)
-                .append("status", status)
-                .append("perms", perms)
-                .append("icon", icon)
-                .append("createBy", createBy)
-                .append("createTime", createTime)
-                .append("updateBy", updateBy)
-                .append("updateTime", updateTime)
-                .append("remark", remark)
-                .append("children", children)
-                .toString();
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
     }
 }

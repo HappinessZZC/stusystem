@@ -13,7 +13,6 @@ import com.lemonyangzw.stusystem.project.system.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -42,8 +41,7 @@ public class SysUserController {
         AjaxResult ajax = AjaxResult.success();
         ajax.put("roles", sysRoleService.getRoleAll());
         ajax.put("posts", sysPostService.getPostAll());
-        if (StringUtils.isNotNull(userId))
-        {
+        if (StringUtils.isNotNull(userId)) {
             ajax.put(AjaxResult.DATA_TAG, sysUserService.selectUserById(userId));
             ajax.put("postIds", sysPostService.selectPostListByUserId(userId));
             ajax.put("roleIds", sysRoleService.selectRoleListByUserId(userId));
@@ -72,15 +70,11 @@ public class SysUserController {
      * 修改用户
      */
     @PutMapping
-    public AjaxResult edit(@RequestBody SysUser user)
-    {
+    public AjaxResult edit(@RequestBody SysUser user) {
         sysUserService.checkUserAllowed(user);
-        if (UserConstants.NOT_UNIQUE.equals(sysUserService.checkPhoneUnique(user)))
-        {
+        if (UserConstants.NOT_UNIQUE.equals(sysUserService.checkPhoneUnique(user))) {
             return AjaxResult.error("修改用户'" + user.getUserName() + "'失败，手机号码已存在");
-        }
-        else if (UserConstants.NOT_UNIQUE.equals(sysUserService.checkEmailUnique(user)))
-        {
+        } else if (UserConstants.NOT_UNIQUE.equals(sysUserService.checkEmailUnique(user))) {
             return AjaxResult.error("修改用户'" + user.getUserName() + "'失败，邮箱账号已存在");
         }
         user.setUpdateBy(SecurityUtils.getUsername());
@@ -89,6 +83,7 @@ public class SysUserController {
 
     /**
      * 获取所有用户的列表
+     *
      * @return userInfoList
      */
     @ApiOperation("用户列表")
@@ -112,8 +107,7 @@ public class SysUserController {
      * 状态修改
      */
     @PutMapping("/changeStatus")
-    public AjaxResult changeStatus(@RequestBody SysUser user)
-    {
+    public AjaxResult changeStatus(@RequestBody SysUser user) {
         sysUserService.checkUserAllowed(user);
         user.setUpdateBy(SecurityUtils.getUsername());
         return AjaxResult.toAjax(sysUserService.updateUserStatus(user));
@@ -123,8 +117,7 @@ public class SysUserController {
      * 重置密码
      */
     @PutMapping("/resetPwd")
-    public AjaxResult resetPwd(@RequestBody SysUser user)
-    {
+    public AjaxResult resetPwd(@RequestBody SysUser user) {
         sysUserService.checkUserAllowed(user);
         user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
         user.setUpdateBy(SecurityUtils.getUsername());

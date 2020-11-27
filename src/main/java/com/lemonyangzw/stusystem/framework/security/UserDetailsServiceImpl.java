@@ -3,7 +3,6 @@ package com.lemonyangzw.stusystem.framework.security;
 import com.lemonyangzw.stusystem.common.utils.StringUtils;
 import com.lemonyangzw.stusystem.framework.security.service.SysPermissionService;
 import com.lemonyangzw.stusystem.project.system.domain.SysUser;
-import com.lemonyangzw.stusystem.project.system.mapper.SysUserMapper;
 import com.lemonyangzw.stusystem.project.system.service.SysUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 
 /**
  * @author Yang

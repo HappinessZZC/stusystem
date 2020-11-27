@@ -2,7 +2,6 @@ package com.lemonyangzw.stusystem.project.system.service.impl;
 
 import com.lemonyangzw.stusystem.common.utils.StringUtils;
 import com.lemonyangzw.stusystem.project.system.domain.SysDept;
-import com.lemonyangzw.stusystem.project.system.domain.SysMenu;
 import com.lemonyangzw.stusystem.project.system.domain.TreeSelect;
 import com.lemonyangzw.stusystem.project.system.mapper.SysDeptMapper;
 import com.lemonyangzw.stusystem.project.system.service.SysDeptService;
@@ -22,6 +21,7 @@ import java.util.stream.Collectors;
 public class SysDeptServiceImpl implements SysDeptService {
     @Autowired
     private SysDeptMapper sysdeptMapper;
+
     @Override
     public List<SysDept> selectDeptList(SysDept dept) {
         return sysdeptMapper.selectDeptList(dept);
@@ -40,26 +40,21 @@ public class SysDeptServiceImpl implements SysDeptService {
      * @return 树结构列表
      */
     @Override
-    public List<SysDept> buildDeptTree(List<SysDept> depts)
-    {
+    public List<SysDept> buildDeptTree(List<SysDept> depts) {
         List<SysDept> returnList = new ArrayList<SysDept>();
         List<Long> tempList = new ArrayList<Long>();
-        for (SysDept dept : depts)
-        {
+        for (SysDept dept : depts) {
             tempList.add(dept.getDeptId());
         }
-        for (Iterator<SysDept> iterator = depts.iterator(); iterator.hasNext();)
-        {
+        for (Iterator<SysDept> iterator = depts.iterator(); iterator.hasNext(); ) {
             SysDept dept = (SysDept) iterator.next();
             // 如果是顶级节点, 遍历该父节点的所有子节点
-            if (!tempList.contains(dept.getParentId()))
-            {
+            if (!tempList.contains(dept.getParentId())) {
                 recursionList(depts, dept);
                 returnList.add(dept);
             }
         }
-        if (returnList.isEmpty())
-        {
+        if (returnList.isEmpty()) {
             returnList = depts;
         }
         return returnList;
@@ -71,19 +66,15 @@ public class SysDeptServiceImpl implements SysDeptService {
      * @param list
      * @param t
      */
-    private void recursionList(List<SysDept> list, SysDept t)
-    {
+    private void recursionList(List<SysDept> list, SysDept t) {
         // 得到子节点列表
         List<SysDept> childList = getChildList(list, t);
         t.setChildren(childList);
-        for (SysDept tChild : childList)
-        {
+        for (SysDept tChild : childList) {
             // 判断是否有子节点
-            if (hasChild(list, tChild))
-            {
+            if (hasChild(list, tChild)) {
                 Iterator<SysDept> it = childList.iterator();
-                while (it.hasNext())
-                {
+                while (it.hasNext()) {
                     SysDept n = (SysDept) it.next();
                     recursionList(list, n);
                 }
@@ -94,15 +85,12 @@ public class SysDeptServiceImpl implements SysDeptService {
     /**
      * 得到子节点列表
      */
-    private List<SysDept> getChildList(List<SysDept> list, SysDept t)
-    {
+    private List<SysDept> getChildList(List<SysDept> list, SysDept t) {
         List<SysDept> tlist = new ArrayList<SysDept>();
         Iterator<SysDept> it = list.iterator();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             SysDept n = (SysDept) it.next();
-            if (StringUtils.isNotNull(n.getParentId()) && n.getParentId().longValue() == t.getDeptId().longValue())
-            {
+            if (StringUtils.isNotNull(n.getParentId()) && n.getParentId().longValue() == t.getDeptId().longValue()) {
                 tlist.add(n);
             }
         }
@@ -112,8 +100,7 @@ public class SysDeptServiceImpl implements SysDeptService {
     /**
      * 判断是否有子节点
      */
-    private boolean hasChild(List<SysDept> list, SysDept t)
-    {
+    private boolean hasChild(List<SysDept> list, SysDept t) {
         return getChildList(list, t).size() > 0 ? true : false;
     }
 }

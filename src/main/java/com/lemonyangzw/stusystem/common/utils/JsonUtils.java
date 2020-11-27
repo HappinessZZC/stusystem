@@ -13,7 +13,8 @@ public class JsonUtils {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
-     *  对象转JSON字符串
+     * 对象转JSON字符串
+     *
      * @param obj
      * @param <T>
      * @return
@@ -32,6 +33,7 @@ public class JsonUtils {
 
     /**
      * JSON字符串转对象
+     *
      * @param str
      * @param clazz
      * @param <T>

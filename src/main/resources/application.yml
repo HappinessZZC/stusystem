@@ -5,7 +5,9 @@ server:
 spring:
   profiles:
     active: druid
-
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
 # Swagger配置
 swagger:
   # 是否开启swagger
@@ -20,7 +22,7 @@ token:
   # 令牌有效期（默认30分钟）
   expireTime: 0
   # 密钥
-  key : 12345_ssdlh_lhbcf_zcdhd_cmbjx_ccwtn_ylfys_hlzds
+  key: 12345_ssdlh_lhbcf_zcdhd_cmbjx_ccwtn_ylfys_hlzds
 
 # MyBatis配置
 mybatis:

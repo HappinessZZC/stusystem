@@ -7,6 +7,7 @@ import java.util.List;
 public interface SysUserMapper {
     /**
      * 根据用户名查询用户信息
+     *
      * @param username
      * @return
      */
@@ -14,6 +15,7 @@ public interface SysUserMapper {
 
     /**
      * 查询全部的用户信息
+     *
      * @return
      */
     List<SysUser> selectAll();

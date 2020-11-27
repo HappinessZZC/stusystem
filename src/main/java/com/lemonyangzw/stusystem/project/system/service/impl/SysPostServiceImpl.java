@@ -16,6 +16,7 @@ import java.util.List;
 public class SysPostServiceImpl implements SysPostService {
     @Autowired
     private SysPostMapper sysPostMapper;
+
     @Override
     public List<SysPost> getPostAll() {
         return sysPostMapper.getPostAll();
@@ -27,8 +28,7 @@ public class SysPostServiceImpl implements SysPostService {
      * @param userId 用户ID
      * @return 选中岗位ID列表
      */
-    public List<Integer> selectPostListByUserId(Long userId)
-    {
+    public List<Integer> selectPostListByUserId(Long userId) {
         return sysPostMapper.selectPostListByUserId(userId);
     }
 }

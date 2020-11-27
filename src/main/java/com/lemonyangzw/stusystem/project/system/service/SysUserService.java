@@ -1,7 +1,6 @@
 package com.lemonyangzw.stusystem.project.system.service;
 
 import com.lemonyangzw.stusystem.project.system.domain.SysUser;
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 
 import java.util.List;
 
@@ -13,6 +12,7 @@ import java.util.List;
 public interface SysUserService {
     /**
      * 根据用户名获取用户信息
+     *
      * @param username 用户名
      * @return SysUser 用户
      */
@@ -20,9 +20,11 @@ public interface SysUserService {
 
     /**
      * 获取全部的用户
+     *
      * @return List<SysUser>
      */
     List<SysUser> getUserAll();
+
     /**
      * 校验用户名称是否唯一
      *
@@ -46,6 +48,7 @@ public interface SysUserService {
      * @return 结果
      */
     String checkEmailUnique(SysUser user);
+
     /**
      * 新增用户信息
      *

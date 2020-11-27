@@ -8,29 +8,29 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @date 2020/11/12 13:56
  */
 public class SysUserPost {
-    /** 用户ID */
+    /**
+     * 用户ID
+     */
     private Long userId;
 
-    /** 岗位ID */
+    /**
+     * 岗位ID
+     */
     private Long postId;
 
-    public Long getUserId()
-    {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId)
-    {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public Long getPostId()
-    {
+    public Long getPostId() {
         return postId;
     }
 
-    public void setPostId(Long postId)
-    {
+    public void setPostId(Long postId) {
         this.postId = postId;
     }
 

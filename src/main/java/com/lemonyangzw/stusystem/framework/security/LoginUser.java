@@ -55,14 +55,13 @@ public class LoginUser implements UserDetails {
 
     @JsonIgnore
     @Override
-    public String getPassword()
-    {
+    public String getPassword() {
         return user.getPassword();
     }
+
     @JsonIgnore
     @Override
-    public String getUsername()
-    {
+    public String getUsername() {
         return user.getUserName();
     }
 

@@ -39,6 +39,7 @@ public class TokenUtils {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
     /**
      * @param request
      * @return 从请求头里获取token
@@ -64,7 +65,7 @@ public class TokenUtils {
             // 解析对应的权限以及用户信息
             String uuid = (String) claims.get(TokenConstants.LOGIN_USER_KEY);
             String userKey = getTokenKey(uuid);
-            LoginUser user = (LoginUser)redisTemplate.opsForValue().get(userKey);
+            LoginUser user = (LoginUser) redisTemplate.opsForValue().get(userKey);
 
             return user;
         }
@@ -91,8 +92,7 @@ public class TokenUtils {
      * @param loginUser 用户信息
      * @return 令牌
      */
-    public String createToken(LoginUser loginUser)
-    {
+    public String createToken(LoginUser loginUser) {
         String token = IdUtil.fastUUID();
         loginUser.setToken(token);
 //        setUserAgent(loginUser);
@@ -119,19 +119,17 @@ public class TokenUtils {
      *
      * @param loginUser 登录信息
      */
-    public void refreshToken(LoginUser loginUser)
-    {
+    public void refreshToken(LoginUser loginUser) {
         // 根据uuid将loginUser缓存
         String userKey = getTokenKey(loginUser.getToken());
-        if(this.tokenExpireTime <= 0 ){
+        if (this.tokenExpireTime <= 0) {
             redisTemplate.opsForValue().set(userKey, loginUser);
-        }else {
+        } else {
             redisTemplate.opsForValue().set(userKey, loginUser, tokenExpireTime, TimeUnit.MINUTES);
         }
     }
 
-    public String getTokenKey(String uuid)
-    {
+    public String getTokenKey(String uuid) {
         return TokenConstants.LOGIN_TOKEN_KEY + uuid;
     }
 }

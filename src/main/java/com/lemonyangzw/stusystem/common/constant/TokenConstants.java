@@ -1,8 +1,8 @@
 package com.lemonyangzw.stusystem.common.constant;
 
 /**
- *
  * Token常量
+ *
  * @author Yang
  * @date 2020/11/20 10:15
  */

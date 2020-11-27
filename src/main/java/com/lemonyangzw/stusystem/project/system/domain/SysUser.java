@@ -102,7 +102,6 @@ public class SysUser extends BaseEntity {
     private Long[] postIds;
 
 
-
     public SysUser() {
 
     }

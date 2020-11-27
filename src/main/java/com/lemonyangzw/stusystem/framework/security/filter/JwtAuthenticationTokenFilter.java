@@ -1,6 +1,5 @@
 package com.lemonyangzw.stusystem.framework.security.filter;
 
-import com.lemonyangzw.stusystem.common.utils.JsonUtils;
 import com.lemonyangzw.stusystem.common.utils.StringUtils;
 import com.lemonyangzw.stusystem.common.utils.TokenUtils;
 import com.lemonyangzw.stusystem.framework.security.LoginUser;

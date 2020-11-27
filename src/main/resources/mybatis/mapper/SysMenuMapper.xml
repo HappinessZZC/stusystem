@@ -1,46 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lemonyangzw.stusystem.project.system.mapper.SysMenuMapper">
-    <resultMap id="BaseResultMap" type="com.lemonyangzw.stusystem.project.system.domain.SysMenu">
-        <id column="menu_id" jdbcType="BIGINT" property="menuId"/>
-        <result column="menu_name" jdbcType="VARCHAR" property="menuName"/>
-        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
-        <result column="order_num" jdbcType="INTEGER" property="orderNum"/>
-        <result column="path" jdbcType="VARCHAR" property="path"/>
-        <result column="component" jdbcType="VARCHAR" property="component"/>
-        <result column="is_frame" jdbcType="INTEGER" property="isFrame"/>
-        <result column="menu_type" jdbcType="CHAR" property="menuType"/>
-        <result column="visible" jdbcType="CHAR" property="visible"/>
-        <result column="status" jdbcType="CHAR" property="status"/>
-        <result column="perms" jdbcType="VARCHAR" property="perms"/>
-        <result column="icon" jdbcType="VARCHAR" property="icon"/>
-        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
-        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
-        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+    <resultMap id="SysMenuResult" type="com.lemonyangzw.stusystem.project.system.domain.SysMenu">
+        <id property="menuId" column="menu_id"/>
+        <result property="menuName" column="menu_name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="path" column="path"/>
+        <result property="component" column="component"/>
+        <result property="isFrame" column="is_frame"/>
+        <result property="menuType" column="menu_type"/>
+        <result property="visible" column="visible"/>
+        <result property="status" column="status"/>
+        <result property="perms" column="perms"/>
+        <result property="icon" column="icon"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="remark" column="remark"/>
     </resultMap>
-    <select id="selectMenuTreeAll" resultMap="BaseResultMap">
-        select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.visible, m.status, ifnull(m.perms,'') as perms, m.is_frame, m.menu_type, m.icon, m.order_num, m.create_time
-		from sys_menu m where m.menu_type in ('M', 'C') and m.status = 0
-		order by m.parent_id, m.order_num
+
+    <sql id="selectMenuVo">
+        select menu_id,
+               menu_name,
+               parent_id,
+               order_num,
+               path,
+               component,
+               is_frame,
+               menu_type,
+               visible,
+               status,
+               ifnull(perms, '') as perms,
+               icon,
+               create_by,
+               create_time,
+               update_time,
+               update_by,
+               remark
+        from sys_menu
+    </sql>
+
+    <select id="selectMenuTreeAll" resultMap="SysMenuResult">
+        select distinct m.menu_id,
+                        m.parent_id,
+                        m.menu_name,
+                        m.path,
+                        m.component,
+                        m.visible,
+                        m.status,
+                        ifnull(m.perms, '') as perms,
+                        m.is_frame,
+                        m.menu_type,
+                        m.icon,
+                        m.order_num,
+                        m.create_time
+        from sys_menu m
+        where m.menu_type in ('M', 'C')
+          and m.status = 0
+        order by m.parent_id, m.order_num
     </select>
-    <select id="selectMenuTreeByUserId" parameterType="Long" resultMap="BaseResultMap">
-        select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.visible, m.status, ifnull(m.perms,'') as perms, m.is_frame, m.menu_type, m.icon, m.order_num, m.create_time
-		from sys_menu m
-			 left join sys_role_menu rm on m.menu_id = rm.menu_id
-			 left join sys_user_role ur on rm.role_id = ur.role_id
-			 left join sys_role ro on ur.role_id = ro.role_id
-			 left join sys_user u on ur.user_id = u.user_id
-		where u.user_id = #{userId} and m.menu_type in ('M', 'C') and m.status = 0  AND ro.status = 0
-		order by m.parent_id, m.order_num
+    <select id="selectMenuTreeByUserId" parameterType="Long" resultMap="SysMenuResult">
+        select distinct m.menu_id,
+        m.parent_id,
+        m.menu_name,
+        m.path,
+        m.component,
+        m.visible,
+        m.status,
+        ifnull(m.perms, '') as perms,
+        m.is_frame,
+        m.menu_type,
+        m.icon,
+        m.order_num,
+        m.create_time
+        from sys_menu m
+        left join sys_role_menu rm on m.menu_id = rm.menu_id
+        left join sys_user_role ur on rm.role_id = ur.role_id
+        left join sys_role ro on ur.role_id = ro.role_id
+        left join sys_user u on ur.user_id = u.user_id
+        where u.user_id = #{userId}
+        and m.menu_type in ('M', 'C')
+        and m.status = 0
+        AND ro.status = 0
+        order by m.parent_id, m.order_num
     </select>
     <select id="selectMenuPermsByUserId" parameterType="Long" resultType="String">
-		select distinct m.perms
-		from sys_menu m
-			 left join sys_role_menu rm on m.menu_id = rm.menu_id
-			 left join sys_user_role ur on rm.role_id = ur.role_id
-			 left join sys_role r on r.role_id = ur.role_id
-		where m.status = '0' and r.status = '0' and ur.user_id = #{userId}
-	</select>
+        select distinct m.perms
+        from sys_menu m
+        left join sys_role_menu rm on m.menu_id = rm.menu_id
+        left join sys_user_role ur on rm.role_id = ur.role_id
+        left join sys_role r on r.role_id = ur.role_id
+        where m.status = '0'
+        and r.status = '0'
+        and ur.user_id = #{userId}
+    </select>
+
+    <select id="selectMenuList" parameterType="com.lemonyangzw.stusystem.project.system.domain.SysMenu"
+            resultMap="SysMenuResult">
+        <include refid="selectMenuVo"/>
+        <where>
+            <if test="menuName != null and menuName != ''">
+                AND menu_name like concat('%',
+                #{menuName},
+                '%'
+                )
+            </if>
+            <if test="visible != null and visible != ''">
+                AND visible
+                =
+                #{visible}
+            </if>
+            <if test="status != null and status != ''">
+                AND status
+                =
+                #{status}
+            </if>
+        </where>
+        order by parent_id,
+        order_num
+    </select>
+    <select id="selectMenuListByUserId" parameterType="com.lemonyangzw.stusystem.project.system.domain.SysMenu"
+            resultMap="SysMenuResult">
+        select distinct m.menu_id,
+        m.parent_id,
+        m.menu_name,
+        m.path,
+        m.component,
+        m.visible,
+        m.status,
+        ifnull(m.perms, '') as perms,
+        m.is_frame,
+        m.menu_type,
+        m.icon,
+        m.order_num,
+        m.create_time
+        from sys_menu m
+        left join sys_role_menu rm on m.menu_id = rm.menu_id
+        left join sys_user_role ur on rm.role_id = ur.role_id
+        left join sys_role ro on ur.role_id = ro.role_id
+        where ur.user_id = #{params.userId}
+        <if test="menuName != null and menuName != ''">
+            AND menu_name like concat('%', #{menuName}, '%')
+        </if>
+        <if test="visible != null and visible != ''">
+            AND visible = #{visible}
+        </if>
+        <if test="status != null and status != ''">
+            AND status = #{status}
+        </if>
+        order by m.parent_id, m.order_num
+    </select>
 </mapper>

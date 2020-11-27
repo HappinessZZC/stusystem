@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Yang
@@ -22,6 +21,7 @@ import java.util.Objects;
 public class SysDeptController {
     @Autowired
     private SysDeptService sysDeptService;
+
     /**
      * @param dept
      * @return 获取部门下拉树列表

@@ -20,21 +20,18 @@ public class SysPermissionService {
 
     @Autowired
     private SysMenuService sysMenuService;
+
     /**
      * 获取菜单数据权限
      *
      * @param user 用户信息
      * @return 菜单权限信息
      */
-    public Set<String> getMenuPermission(SysUser user)
-    {
+    public Set<String> getMenuPermission(SysUser user) {
         Set<String> perms = new HashSet<String>();
-        if (roleUtils.isAdmin(user.getUserId()))
-        {
+        if (roleUtils.isAdmin(user.getUserId())) {
             perms.add("*:*:*");
-        }
-        else
-        {
+        } else {
             perms.addAll(sysMenuService.selectMenuPermsssionByUserId(user.getUserId()));
         }
         return perms;

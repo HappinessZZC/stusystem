@@ -21,10 +21,10 @@ public class RoleUtils {
      * @param  UserId 用户ID
      * @return 角色列表
      */
-    public boolean isAdmin(Long UserId){
+    public boolean isAdmin(Long UserId) {
         List<SysRole> roleList = sysRoleService.getSysRoleByUserId(UserId);
         for (SysRole sysRole : roleList) {
-            if("admin".equals(sysRole.getRoleKey())){
+            if ("admin".equals(sysRole.getRoleKey())) {
                 return true;
             }
         }

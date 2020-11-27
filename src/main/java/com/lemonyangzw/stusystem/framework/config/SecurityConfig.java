@@ -5,10 +5,7 @@ import com.lemonyangzw.stusystem.framework.security.filter.JwtAuthenticationToke
 import com.lemonyangzw.stusystem.framework.security.handle.AuthenticationEntryPointImpl;
 import com.lemonyangzw.stusystem.framework.security.handle.LogoutSuccessHandlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -17,12 +14,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import javax.annotation.Resource;
-
 /**
  * @author Yang
  * 安全配置
- *
  * @date 2020/8/6 16:07
  */
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
@@ -68,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * authenticated       |   用户登录后可访问
      */
     @Override
-    protected void configure(HttpSecurity http) throws Exception  {
+    protected void configure(HttpSecurity http) throws Exception {
         http
                 // CRSF禁用，因为不使用session
                 .csrf().disable()
@@ -115,4 +109,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(provider);
-    }}
+    }
+}

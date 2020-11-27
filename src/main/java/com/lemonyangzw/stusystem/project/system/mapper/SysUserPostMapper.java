@@ -15,7 +15,7 @@ public interface SysUserPostMapper {
      * @param userPostList 用户角色列表
      * @return 结果
      */
-   int batchUserPost(List<SysUserPost> userPostList);
+    int batchUserPost(List<SysUserPost> userPostList);
 
     /**
      * 通过用户ID删除用户和岗位关联
