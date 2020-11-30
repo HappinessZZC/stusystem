@@ -1,10 +1,11 @@
 package com.lemonyangzw.stusystem.project.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lemonyangzw.stusystem.project.system.domain.SysPost;
 
 import java.util.List;
 
-public interface SysPostMapper {
+public interface SysPostMapper extends BaseMapper<SysPost> {
 
     List<SysPost> getPostAll();
 

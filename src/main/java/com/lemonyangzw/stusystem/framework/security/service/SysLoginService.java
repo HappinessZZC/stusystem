@@ -11,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.Map;
 
 /**
  * @author Yang
@@ -26,11 +25,11 @@ public class SysLoginService {
     @Resource
     private SecurityAuthenticationProvider authenticationManager;
 
-    public String login(Map<String, String> map) {
+    public String login(String username, String password, String uuid) {
         Authentication authentication = null;
         try {
             authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(map.get("username"), map.get("password")));
+                    new UsernamePasswordAuthenticationToken(username, password));
         } catch (Exception e) {
             throw new UserPasswordNotMatchException();
         }

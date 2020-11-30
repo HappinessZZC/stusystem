@@ -1,4 +1,4 @@
-package com.lemonyangzw.stusystem.framework.config;
+package com.lemonyangzw.stusystem.framework.security.config;
 
 
 import com.lemonyangzw.stusystem.framework.security.filter.JwtAuthenticationTokenFilter;

@@ -1,10 +1,11 @@
 package com.lemonyangzw.stusystem.project.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lemonyangzw.stusystem.project.system.domain.SysMenu;
 
 import java.util.List;
 
-public interface SysMenuMapper {
+public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
     /***
      *

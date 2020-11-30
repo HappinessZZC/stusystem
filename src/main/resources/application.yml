@@ -25,13 +25,18 @@ token:
   key: 12345_ssdlh_lhbcf_zcdhd_cmbjx_ccwtn_ylfys_hlzds
 
 # MyBatis配置
-mybatis:
+mybatis-plus:
   # 搜索指定包别名
   typealiasespackage: com.lemonyangzw.stusystem.project.*.domain
   # 配置mapper的扫描，找到所有的mapper.xml映射文件
   mapperLocations: classpath*:mybatis/**/*Mapper.xml
   # 加载全局的配置文件
   config-Location: classpath:mybatis/mybatis-config.xml
+  global-config:
+    db-config:
+      logic-delete-field: delFlag
+      logic-delete-value: "2"
+      logic-not-delete-value: "0"
 
   # redis 配置
 redis:
@@ -60,13 +65,6 @@ pagehelper:
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
-
-#通用Mapper配置
-mapper:
-  mappers:
-    - com.lemonyangzw.stusystem.common.utils.BaseMapper
-  not-empty: false
-  identity: MYSQL
 
 # 日志配置
 logging:

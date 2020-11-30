@@ -1,11 +1,15 @@
 package com.lemonyangzw.stusystem.project.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lemonyangzw.stusystem.project.system.domain.SysRole;
 
 import java.util.List;
 
-public interface SysRoleMapper {
-
+/**
+ * @author Yang
+ * @date 2020/11/30 9:28
+ */
+public interface SysRoleMapper extends BaseMapper<SysRole> {
     /**
      * 根据用户Id查找角色
      *
@@ -60,5 +64,4 @@ public interface SysRoleMapper {
      * @return 结果
      */
     int insertRole(SysRole role);
-
 }

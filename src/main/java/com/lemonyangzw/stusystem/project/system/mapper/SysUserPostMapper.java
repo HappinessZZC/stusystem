@@ -1,5 +1,6 @@
 package com.lemonyangzw.stusystem.project.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lemonyangzw.stusystem.project.system.domain.SysUserPost;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
  * @author Yang
  * @date 2020/11/12 14:02
  */
-public interface SysUserPostMapper {
+public interface SysUserPostMapper extends BaseMapper<SysUserPost> {
     /**
      * 批量新增用户岗位信息
      *

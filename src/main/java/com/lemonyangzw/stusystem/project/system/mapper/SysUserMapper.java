@@ -1,10 +1,11 @@
 package com.lemonyangzw.stusystem.project.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lemonyangzw.stusystem.project.system.domain.SysUser;
 
 import java.util.List;
 
-public interface SysUserMapper {
+public interface SysUserMapper extends BaseMapper<SysUser> {
     /**
      * 根据用户名查询用户信息
      *

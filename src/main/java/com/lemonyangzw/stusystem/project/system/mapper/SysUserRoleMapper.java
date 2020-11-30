@@ -1,11 +1,12 @@
 package com.lemonyangzw.stusystem.project.system.mapper;
 
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lemonyangzw.stusystem.project.system.domain.SysUserRole;
 
 import java.util.List;
 
-public interface SysUserRoleMapper {
+public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
     /**
      * 批量新增用户角色信息
      *

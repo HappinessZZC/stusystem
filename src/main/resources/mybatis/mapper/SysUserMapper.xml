@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lemonyangzw.stusystem.project.system.mapper.SysUserMapper">
-    <resultMap type="SysUser" id="SysUserResult">
+    <resultMap type="com.lemonyangzw.stusystem.project.system.domain.SysUser" id="SysUserResult">
         <id property="userId" column="user_id"/>
         <result property="deptId" column="dept_id"/>
         <result property="userName" column="user_name"/>
@@ -20,11 +20,12 @@
         <result property="updateBy" column="update_by"/>
         <result property="updateTime" column="update_time"/>
         <result property="remark" column="remark"/>
-        <association property="dept" column="dept_id" javaType="SysDept" resultMap="deptResult"/>
+        <association property="dept" column="dept_id" javaType="com.lemonyangzw.stusystem.project.system.domain.SysDept"
+                     resultMap="deptResult"/>
         <collection property="roles" javaType="java.util.List"
                     ofType="com.lemonyangzw.stusystem.project.system.domain.SysRole" resultMap="RoleResult"/>
     </resultMap>
-    <resultMap id="deptResult" type="SysDept">
+    <resultMap id="deptResult" type="com.lemonyangzw.stusystem.project.system.domain.SysDept">
         <id property="deptId" column="dept_id"/>
         <result property="parentId" column="parent_id"/>
         <result property="deptName" column="dept_name"/>
@@ -33,7 +34,7 @@
         <result property="status" column="dept_status"/>
     </resultMap>
 
-    <resultMap id="RoleResult" type="SysRole">
+    <resultMap id="RoleResult" type="com.lemonyangzw.stusystem.project.system.domain.SysRole">
         <id property="roleId" column="role_id"/>
         <result property="roleName" column="role_name"/>
         <result property="roleKey" column="role_key"/>
@@ -58,6 +59,8 @@
                u.create_by,
                u.create_time,
                u.remark,
+               u.update_by,
+               u.update_time,
                d.dept_id,
                d.parent_id,
                d.dept_name,
@@ -76,7 +79,8 @@
                      left join sys_role r on r.role_id = ur.role_id
     </sql>
     <delete id="deleteUserByIds" parameterType="Long">
-        update sys_user set del_flag = '2' where user_id in
+        update sys_user
+        set del_flag = '2' where user_id in
         <foreach collection="array" item="userId" open="(" separator="," close=")">
             #{userId}
         </foreach>
@@ -91,18 +95,25 @@
         order by u.user_id
     </select>
     <select id="checkUserNameUnique" parameterType="String" resultType="int">
-        select count(1) from sys_user where user_name = #{userName}
+        select count(1)
+        from sys_user
+        where user_name = #{userName}
     </select>
 
     <select id="checkPhoneUnique" parameterType="String" resultMap="SysUserResult">
-        select user_id, phonenumber from sys_user where phonenumber = #{phonenumber}
+        select user_id, phonenumber
+        from sys_user
+        where phonenumber = #{phonenumber}
     </select>
 
     <select id="checkEmailUnique" parameterType="String" resultMap="SysUserResult">
-        select user_id, email from sys_user where email = #{email}
+        select user_id, email
+        from sys_user
+        where email = #{email}
     </select>
 
-    <insert id="insertUser" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
+    <insert id="insertUser" parameterType="com.lemonyangzw.stusystem.project.system.domain.SysUser"
+            useGeneratedKeys="true" keyProperty="userId">
         insert into sys_user(
         <if test="userId != null and userId != 0">
             user_id,
@@ -140,8 +151,7 @@
         <if test="remark != null and remark != ''">
             remark,
         </if>
-        create_time
-        )values(
+        create_time)values(
         <if test="userId != null and userId != ''">
             #{userId},
         </if>
@@ -178,8 +188,7 @@
         <if test="remark != null and remark != ''">
             #{remark},
         </if>
-        sysdate()
-        )
+        sysdate())
     </insert>
 
     <select id="selectUserById" parameterType="Long" resultMap="SysUserResult">
@@ -187,7 +196,7 @@
         where u.user_id = #{userId}
     </select>
 
-    <update id="updateUser" parameterType="SysUser">
+    <update id="updateUser" parameterType="com.lemonyangzw.stusystem.project.system.domain.SysUser">
         update sys_user
         <set>
             <if test="deptId != null and deptId != 0">

@@ -2,6 +2,7 @@ package com.lemonyangzw.stusystem.project.system.controller;
 
 import com.lemonyangzw.stusystem.common.utils.StringUtils;
 import com.lemonyangzw.stusystem.common.utils.TokenUtils;
+import com.lemonyangzw.stusystem.framework.security.LoginBody;
 import com.lemonyangzw.stusystem.framework.security.LoginUser;
 import com.lemonyangzw.stusystem.framework.security.service.SysLoginService;
 import com.lemonyangzw.stusystem.framework.web.domain.AjaxResult;
@@ -19,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Yang
@@ -41,9 +45,10 @@ public class SysLoginController {
 
     @ApiOperation("登录验证")
     @PostMapping("/login")
-    public AjaxResult login(@RequestBody Map<String, String> map) {
+    public AjaxResult login(@RequestBody LoginBody loginBody) {
         AjaxResult ajax = AjaxResult.success();
-        String token = sysLoginService.login(map);
+        String token = sysLoginService.login(loginBody.getUsername(), loginBody.getPassword(),
+                loginBody.getUuid());
         ajax.put("token", token);
         return ajax;
     }

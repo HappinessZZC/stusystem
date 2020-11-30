@@ -1,17 +1,22 @@
 package com.lemonyangzw.stusystem.project.system.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+@TableName("sys_user_role")
 public class SysUserRole {
     /**
      * 用户ID
      */
+    @TableField("user_id")
     private Long userId;
 
     /**
      * 角色ID
      */
+    @TableField("role_id")
     private Long roleId;
 
     public Long getUserId() {
