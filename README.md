@@ -1,6 +1,7 @@
 # stusystem
-stusystem-ui的后台API
+一个学习设备采集，设备信息展示的平台
 
+后续工作计划
 1.前端整合
 2.腾讯地图准备
 3.netty准备
